@@ -8,7 +8,7 @@ Array.prototype.subtract = function (elem) {
 };
 
 module.exports = class Baylit {
-  constructor({ dbName = "baylit", dbFolder = "databases" }) {
+  constructor({ dbName = "baylit", dbFolder = "databases", min = true }) {
     /**
      * @private
      */
@@ -25,11 +25,12 @@ module.exports = class Baylit {
     /**
      * @private
      */
-    this._saveFile = function () {
-      return fs.writeFileSync(
-        `./${this._FOLDER()}.json`,
-        JSON.stringify(this.db, null, 2),
-      );
+    this._saveFile = function (data) {
+      if (min) {
+        return fs.writeFileSync(`./${this._FOLDER()}.json`, JSON.stringify(data));
+      } else {
+        return fs.writeFileSync(`./${this._FOLDER()}.json`, JSON.stringify(data, null, 2));
+      }
     };
   }
   get(key) {
@@ -59,8 +60,9 @@ module.exports = class Baylit {
           return d[t];
         }, b);
     c[key.split(".").slice(-1)[0]] = value;
-    this._saveFile();
-    return this.get(key);
+    console.log(this.db)
+    this._saveFile(a);
+    return true;
   }
   add(key, value) {
     if (typeof value === "function")
