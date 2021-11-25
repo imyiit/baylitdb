@@ -60,7 +60,6 @@ module.exports = class Baylit {
           return d[t];
         }, b);
     c[key.split(".").slice(-1)[0]] = value;
-    console.log(this.db)
     this._saveFile(a);
     return true;
   }
