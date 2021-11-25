@@ -111,7 +111,8 @@ module.exports = class Baylit {
           return a[b];
         }, b);
     delete c[key.split(".").slice(-1)[0]];
-    this._saveFile();
+    if (!a) a = {}
+    this._saveFile(a);
     return true;
   }
   deleteAll() {
